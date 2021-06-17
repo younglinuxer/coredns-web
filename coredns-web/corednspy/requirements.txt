@@ -1,0 +1,4 @@
+etcd3==0.12.0
+Flask==1.1.4
+Flask-Bootstrap==3.3.7.1
+simplejson==3.17.2
