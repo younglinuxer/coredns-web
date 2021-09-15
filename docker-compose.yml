@@ -39,7 +39,7 @@ services:
     - 53:53/udp
 
   web:
-    image: younglinuxer/coredns-web:v1
+    image: younglinuxer/coredns-web:v2
     container_name: coredns-web
     restart: always
     depends_on:

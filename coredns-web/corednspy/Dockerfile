@@ -5,6 +5,6 @@ COPY requirements.txt /requirements.txt
 
 COPY corednspy/ /corednspy
 
-RUN pip install -r /requirements.txt
+RUN pip install -r /requirements.txt  -i https://mirrors.aliyun.com/pypi/simple/
 
 CMD [ "python", "/corednspy/run_etc.py"]

@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, flash,redirect,url_for
 import json,re
 import etcd3
 
-etcd = etcd3.client(host='192.168.71.135', port='2379')
+etcd = etcd3.client(host='etcd-dns', port='2379')
 
 def get_dns():
     data = etcd.get_all_response()
@@ -70,6 +70,6 @@ def del_dns():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8083,debug=True)
+    app.run(host='0.0.0.0', port=8081,debug=True)
 
 
