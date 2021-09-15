@@ -22,6 +22,20 @@
     <div class="login-logo">
         <a >添加域名解析</a>
     </div>
+    {% block custom_message %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="select-bar">
+                    <ul style="margin:0 0 0 10px;padding:5px 10px;">
+                        {% for category, message in messages %}
+                            <div class="alert alert-warning">{{ message | safe }}</div>
+{#                            <li style="font-size:15px;">{{ message | safe }}</li>#}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endblock %}
     <!-- /.login-logo -->
     <div class="login-box-body">
 
@@ -67,21 +81,43 @@
     </div>
 
     <div class="select-bar" >
-        {% for dns in jxjl %}
-            <li style="font-size:15px;">{{ dns.domain }} {{ dns.ip }}</li>
+        <table class="table table-hover">
+      <caption>域名解析记录</caption>
+          <thead>
+            <tr>
+              <th>域名</th>
+              <th>对应IP</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for dns in jxjl %}
+            <tr>
+              <td>{{ dns.domain }}</td>
+              <td>{{ dns.ip }}</td>
+              <td><button id="{{ dns.domain }}" onclick="javascript:delete_fc(this);" type="button" class="btn btn-danger">删除</button></td>
+            </tr>
         {% endfor %}
+          </tbody>
+        </table>
     </div>
-    {% block custom_message %}
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="select-bar">
-                    <ul style="margin:0 0 0 10px;padding:5px 10px;">
-                        {% for category, message in messages %}
-                            <li style="font-size:15px;">{{ message | safe }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endwith %}
-    {% endblock %}
+    <script type="text/javascript">
+        function delete_fc(e)
+        {
+             {#const params app_name=e.id;#}
+             let data = "domain=" + e.id,
+      　　　　 url = '/del_dns',
+      　　　　 xhr = new XMLHttpRequest();
+          　　xhr.open('post', url);
+              //设置header
+          　　xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          　　xhr.send(data);
+          　　xhr.onreadystatechange = function () {
+          　　　　if (xhr.readyState === 4 && ( xhr.status === 200 || xhr.status === 304 )){
+          　　　　　　console.log(xhr.responseText);
+                    location.reload();
+          　　　　}
+          　　}
+        }
+    </script>
 </div>
